@@ -1,11 +1,6 @@
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
-
-// const postcssCfg = path.resolve(__dirname, './postcss.config.js');
-// const GLOBALS = {
-//   'process.env.NODE_ENV': JSON.stringify('development')
-// };
+import Dotenv from 'dotenv-webpack';
 
 export default {
   entry: [
@@ -29,9 +24,8 @@ export default {
     new webpack.LoaderOptionsPlugin({
       debug: true
     }),
-    // new webpack.DefinePlugin(GLOBALS),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html')
+    new Dotenv({
+      path: './.env'
     })
   ],
   module: {
@@ -74,6 +68,6 @@ export default {
     ]
   },
   resolve: {
-    extensions: ['.jsx', '.js', '.scss']
+    extensions: ['.jsx', '.js', '.scss'],
   }
 };
