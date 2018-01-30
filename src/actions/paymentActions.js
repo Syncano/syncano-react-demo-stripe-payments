@@ -13,7 +13,7 @@ const { MAKE_PAYMENT_SUCCESSFUL, MAKE_PAYMENT_FAILED } = actionTypes;
 const makePaymentSuccessful = (paymentResponse) => {
   return {
     type: MAKE_PAYMENT_SUCCESSFUL,
-    payload: { paymentResponse }
+    payload: { message: paymentResponse }
   };
 };
 

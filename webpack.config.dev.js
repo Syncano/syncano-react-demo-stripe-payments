@@ -1,13 +1,11 @@
-import webpack from 'webpack';
-import path from 'path';
-import Dotenv from 'dotenv-webpack';
+const path = require('path');
+const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
-export default {
-  entry: [
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client?reload=true',
-    path.resolve(__dirname, 'src/index')
-  ],
+module.exports = {
+  entry: {
+    app: path.resolve(__dirname, './src/index.jsx')
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
@@ -16,6 +14,10 @@ export default {
   devtool: 'inline-source-map',
   target: 'web',
   devServer: {
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    stats: 'errors-only',
     contentBase: path.resolve(__dirname, 'dist')
   },
   plugins: [
@@ -33,12 +35,7 @@ export default {
       {
         test: /\.(js|jsx)?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            query: { presets: ['env', 'react'] }
-          }
-        ],
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,

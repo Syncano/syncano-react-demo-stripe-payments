@@ -8,7 +8,7 @@ const { GET_TOKEN_SUCCESSFUL, GET_TOKEN_FAILED } = actionTypes;
 
 /**
  *
- * @param {*} generateTokenParam
+ * @param {*} tokenID
  * @returns {object} - action
  */
 const getTokenSuccessful = (tokenID) => {
@@ -32,11 +32,10 @@ const getTokenFailed = (error) => {
 
 /**
  *
- * @param {*} generateTokenParam
+ * @param {*} card
  * @returns {function} - dispatch
  */
 const generateToken = (card) => {
-  // console.log(generateTokenParam)
   return (dispatch) => {
     const args = {
       tokenParams: {

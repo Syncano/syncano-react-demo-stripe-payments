@@ -7,6 +7,7 @@ import store from './store/configureStore';
 import App from './components/App';
 import './styles/styles.css';
 
+
 // const history = createBrowserHistory();
 
 render(

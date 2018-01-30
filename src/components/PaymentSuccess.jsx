@@ -22,7 +22,7 @@ class PaymentSuccess extends React.Component {
                 <button type="button" className="close" data-dismiss="modal">
                   &times;
                 </button>
-                <h4 className="modal-title">Payment Successful</h4>
+                <h4 className="modal-title">Payment Successful {this.props.message}</h4>
               </div>
               <br />
               <div className="modal-body">
@@ -50,6 +50,7 @@ class PaymentSuccess extends React.Component {
 
 PaymentSuccess.propTypes = {
   onConfirm: PropTypes.func.isRequired,
+  message: PropTypes.string,
 };
 
 export default PaymentSuccess;
