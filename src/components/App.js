@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 import Payment from './Payment';
 import Header from './common/Header';
+import Cards from './Cards';
 
 /**
  * App component
@@ -22,6 +23,7 @@ class App extends React.Component {
         <Header />
         <Route exact path="/" component={Payment} />
         <Route path="/payment" component={Payment} />
+        <Route path="/cards" component={Cards} />
       </div>
     );
   }

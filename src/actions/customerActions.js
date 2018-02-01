@@ -38,16 +38,20 @@ const createCustomerFailed = (error) => {
 const createCustomer = (accountBalance) => {
   return (dispatch) => {
     const args = { customerParameter: accountBalance };
-    return s
-      .post('stripe-payments/customers/customer', args)
-      .then((response) => {
-        if (response.statusCode === 200) {
-          dispatch(createCustomerSuccessful(response.data.id));
-        }
-      })
-      .catch((error) => {
-        dispatch(createCustomerFailed(error));
-      });
+    if (localStorage.getItem('customerId') === null) {
+      return s
+        .post('stripe-payments/customers/customer', args)
+        .then((response) => {
+          if (response.statusCode === 200) {
+            localStorage.setItem('customerId', response.data.id);
+            dispatch(createCustomerSuccessful(localStorage.customerId));
+          }
+        })
+        .catch((error) => {
+          dispatch(createCustomerFailed(error));
+        });
+    }
+    dispatch(createCustomerSuccessful(localStorage.customerId));
   };
 };
 

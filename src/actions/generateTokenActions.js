@@ -1,10 +1,8 @@
 import SyncanoClient from 'syncano-client';
 import actionTypes from '../actions/actionTypes';
 
-
 const s = new SyncanoClient(process.env.SYNCANO_INSTANCE);
-
-const { GET_TOKEN_SUCCESSFUL, GET_TOKEN_FAILED } = actionTypes;
+const { GET_TOKEN_SUCCESSFUL, GET_TOKEN_FAILED, CLEAR_TOKEN_SUCCESS_FLAG } = actionTypes;
 
 /**
  *
@@ -45,10 +43,9 @@ const generateToken = (card) => {
     return s
       .post('stripe-payments/tokens/token', args)
       .then((response) => {
-        console.log(response, 'Im Token');
-        if (response.statusCode === 200) {
+        if (response.message === 'Token created successfully') {
           dispatch(getTokenSuccessful(response.data.id));
-        }
+        } dispatch(getTokenFailed(response.message));
       })
       .catch((error) => {
         dispatch(getTokenFailed(error));
@@ -56,4 +53,15 @@ const generateToken = (card) => {
   };
 };
 
-export default generateToken;
+const clearTokenSuccessFlag = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLEAR_TOKEN_SUCCESS_FLAG
+    });
+  };
+};
+
+export {
+  generateToken,
+  clearTokenSuccessFlag
+};

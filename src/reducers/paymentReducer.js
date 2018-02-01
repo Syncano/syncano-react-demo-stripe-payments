@@ -1,8 +1,7 @@
 import actionTypes from '../actions/actionTypes';
 import initialState from './initialState';
-import helpers from '../components/utils/helpers';
 
-const { MAKE_PAYMENT_SUCCESSFUL, MAKE_PAYMENT_FAILED } = actionTypes;
+const { MAKE_PAYMENT_SUCCESSFUL, MAKE_PAYMENT_FAILED, CLEAR_PAYMENT_SUCCESS_FLAG } = actionTypes;
 
 /**
  *
@@ -15,12 +14,17 @@ export default function paymentReducer(state = initialState.payment, action) {
     case MAKE_PAYMENT_SUCCESSFUL:
       return { ...state,
         message: action.payload.message,
-        responseType: helpers.MAKE_PAYMENT_SUCCESSFUL
+        successFlag: true
       };
     case MAKE_PAYMENT_FAILED:
-      return Object.assign({}, state, {
-        ...action.error
-      });
+      return { ...state,
+        error: action.error,
+        successFlag: false
+      };
+    case CLEAR_PAYMENT_SUCCESS_FLAG:
+      return { ...state,
+        successFlag: null
+      };
     default:
       return state;
   }

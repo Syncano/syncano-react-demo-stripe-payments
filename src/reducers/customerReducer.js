@@ -12,13 +12,15 @@ const { CREATE_CUSTOMER_SUCCESSFUL, CREATE_CUSTOMER_FAILED } = actionTypes;
 export default function customerReducer(state = initialState.customer, action) {
   switch (action.type) {
     case CREATE_CUSTOMER_SUCCESSFUL:
-      return Object.assign({}, state, {
-        ...action.payload
-      });
+      return { ...state,
+        customerId: action.payload.customerId,
+        successFlag: true
+      };
     case CREATE_CUSTOMER_FAILED:
-      return Object.assign({}, state, {
-        ...action.error
-      });
+      return { ...state,
+        error: action.error,
+        successFlag: false
+      };
     default:
       return state;
   }

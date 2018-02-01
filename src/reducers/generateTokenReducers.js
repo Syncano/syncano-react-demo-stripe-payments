@@ -1,8 +1,7 @@
 import actionTypes from '../actions/actionTypes';
 import initialState from './initialState';
-import helpers from '../components/utils/helpers';
 
-const { GET_TOKEN_SUCCESSFUL, GET_TOKEN_FAILED } = actionTypes;
+const { GET_TOKEN_SUCCESSFUL, GET_TOKEN_FAILED, CLEAR_TOKEN_SUCCESS_FLAG } = actionTypes;
 
 /**
    *
@@ -13,15 +12,19 @@ const { GET_TOKEN_SUCCESSFUL, GET_TOKEN_FAILED } = actionTypes;
 export default function generateTokenReducer(state = initialState.getToken, action) {
   switch (action.type) {
     case GET_TOKEN_SUCCESSFUL:
-      console.log(state, 'im here state')
       return { ...state,
         source: action.payload.source,
-        responseType: helpers.GET_TOKEN_SUCCESSFUL
+        successFlag: true
       };
     case GET_TOKEN_FAILED:
-      return Object.assign({}, state, {
-        ...action.error
-      });
+      return { ...state,
+        error: action.error,
+        successFlag: false
+      };
+    case CLEAR_TOKEN_SUCCESS_FLAG:
+      return { ...state,
+        successFlag: null
+      };
     default:
       return state;
   }

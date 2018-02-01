@@ -3,7 +3,11 @@ import actionTypes from '../actions/actionTypes';
 
 const s = new SyncanoClient(process.env.SYNCANO_INSTANCE);
 
-const { MAKE_PAYMENT_SUCCESSFUL, MAKE_PAYMENT_FAILED } = actionTypes;
+const {
+  MAKE_PAYMENT_SUCCESSFUL,
+  MAKE_PAYMENT_FAILED,
+  CLEAR_PAYMENT_SUCCESS_FLAG
+} = actionTypes;
 
 /**
  *
@@ -50,4 +54,16 @@ const makePayment = (cardDetails) => {
   };
 };
 
-export default makePayment;
+const clearPaymentSuccessFlag = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLEAR_PAYMENT_SUCCESS_FLAG
+    });
+  };
+};
+
+export {
+  makePayment,
+  clearPaymentSuccessFlag
+};
+

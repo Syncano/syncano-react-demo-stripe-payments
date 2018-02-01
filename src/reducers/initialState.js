@@ -2,7 +2,9 @@ const initialState = {
   payment: {},
   getToken: {},
   customer: {},
-  card: {}
+  card: {
+    data: []
+  }
 };
 
 export default initialState;

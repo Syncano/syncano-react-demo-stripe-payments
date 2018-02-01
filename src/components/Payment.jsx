@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 
 import createCustomer from '../actions/customerActions';
-import makePayment from '../actions/paymentActions';
-import generateToken from '../actions/generateTokenActions';
-import createCard from '../actions/cardActions';
+import { makePayment, clearPaymentSuccessFlag } from '../actions/paymentActions';
+import { generateToken, clearTokenSuccessFlag } from '../actions/generateTokenActions';
+import { createCard } from '../actions/cardActions';
 
-import { isValidCreditCard, isCheckExp } from './utils/validate';
-import helpers from './utils/helpers';
+import checkCreditCard from './utils/validate';
 
 /**
  * Payment component
@@ -27,8 +26,6 @@ class Payment extends React.Component {
     currency: 'usd',
     source: 'tok_mastercard',
     account_balance: 0,
-    showModal: false,
-    expectedResultType: null
   };
 
   /**
@@ -39,6 +36,7 @@ class Payment extends React.Component {
     this.props.createCustomer(this.state.account_balance);
   }
 
+
   /**
    * @method componentWillRecieveProps
    * @param {*} nextProps - New properties
@@ -46,20 +44,18 @@ class Payment extends React.Component {
    */
   componentWillReceiveProps(nextProps) {
     const { getTokenState, paymentState, customerID } = nextProps;
-    const { responseType: getTokenResponseType, source } = getTokenState;
-    const { expectedResultType } = this.state;
+    const { successFlag: getTokenSuccessFlag, source } = getTokenState;
 
-    if (paymentState.responseType === helpers.MAKE_PAYMENT_SUCCESSFUL
-      && (!expectedResultType || expectedResultType === helpers.MAKE_PAYMENT_SUCCESSFUL)) {
-      console.log('Hello');
+    if (paymentState.successFlag) {
       swal({
         title: 'Payment Successful',
         text: 'Would you like to create a card?',
         icon: 'success',
         buttons: { confirm: 'Yes', cancel: 'No' }
       })
-        .then((play) => {
-          if (play) {
+        .then((yes) => {
+          this.props.clearPaymentSuccessFlag();
+          if (yes) {
             const getTokenParams = {
               number: this.state.cardNumber,
               exp_month: this.state.expMonth,
@@ -67,20 +63,20 @@ class Payment extends React.Component {
               cvc: this.state.cvCode
             };
             this.props.generateToken(getTokenParams);
-            this.setState(() => {
-              return { expectedResultType: helpers.GET_TOKEN_SUCCESSFUL };
-            });
           } else {
-            swal('Your imaginary file is safe!');
+            swal.stopLoading();
+            swal.close();
           }
         });
     }
-    if (getTokenResponseType === helpers.GET_TOKEN_SUCCESSFUL
-      && (!expectedResultType || expectedResultType === helpers.GET_TOKEN_SUCCESSFUL)) {
+
+    if (getTokenSuccessFlag) {
+      this.props.clearTokenSuccessFlag();
       this.props.createCard(customerID, source);
-      this.setState(() => {
-        return { resultType: helpers.CREATE_CARD_SUCCESSFUL };
-      });
+      this.props.history.push('/cards');
+    } else if (getTokenSuccessFlag === false) {
+      this.props.clearTokenSuccessFlag();
+      swal(`${getTokenState.error} Use a test card `);
     }
   }
 
@@ -101,30 +97,29 @@ class Payment extends React.Component {
   onSubmit = (event) => {
     event.preventDefault();
 
-    this.modalEvent.click();
-
     try {
-      if (isValidCreditCard(this.state.cardNumber)) {
-        // check isValidCreditCard() again, seems wrong
-        throw new Error('Please Enter Sams Name');
-      }
+      const checkingCreditCard = checkCreditCard(
+        this.state.expMonth,
+        this.state.expYear,
+        this.state.cardNumber,
+        this.state.cvCode
+      );
+      if (checkingCreditCard === 'Valid') {
+        const makPaymentParams = {
+          amount: this.state.amount,
+          currency: this.state.currency,
+          source: this.state.source
+        };
 
-      const validExp = isCheckExp(this.state.expMonth, this.state.expYear);
-      if (validExp !== 'Valid') {
-        throw new Error(validExp);
+        this.props.makePayment(makPaymentParams);
+      } else {
+        swal(checkingCreditCard);
       }
-      const makPaymentParams = {
-        amount: this.state.amount,
-        currency: this.state.currency,
-        source: this.state.source
-      };
-      this.props.makePayment(makPaymentParams);
     } catch (error) {
-      // return error.message;
-      console.log(error.message);
+      swal(error);
     }
   }
-  
+
   /**
    * Renders component
    * @return {XML} JSX
@@ -263,7 +258,6 @@ class Payment extends React.Component {
             </div>
           </div>
         </div>
-        {/* <PaymentSuccess show = {this.state.showModal } onConfirm = {this.getToken.bind(this)} /> */}
       </div>
     );
   }
@@ -274,23 +268,17 @@ Payment.propTypes = {
   makePayment: PropTypes.func.isRequired,
   generateToken: PropTypes.func.isRequired,
   createCard: PropTypes.func.isRequired,
-
-  paymentDetails: PropTypes.PropTypes.shape({
-    amount: PropTypes.number,
-    currency: PropTypes.string,
-    source: PropTypes.string
-  }),
-
-  card: PropTypes.PropTypes.shape({
-    number: PropTypes.number,
-    exp_month: PropTypes.number,
-    exp_year: PropTypes.number,
-    cvc: PropTypes.number
-  }),
+  clearPaymentSuccessFlag: PropTypes.func.isRequired,
+  clearTokenSuccessFlag: PropTypes.func.isRequired,
 
   customerID: PropTypes.string,
-  getTokenState: PropTypes.object,
+
+  paymentDetails: PropTypes.object,
   paymentState: PropTypes.object,
+  getTokenState: PropTypes.object,
+  card: PropTypes.object,
+  createCardState: PropTypes.object,
+  history: PropTypes.object,
 
 };
 
@@ -303,6 +291,7 @@ const mapStateToProps = (state) => {
     paymentState: state.paymentReducer,
     getTokenState: state.getTokenReducer,
     customerID: state.customerReducer.customerId,
+    createCardState: state.cardReducer,
   };
 };
 
@@ -310,7 +299,9 @@ const mapDispatchToProps = dispatch => ({
   makePayment: paymentDetails => dispatch(makePayment(paymentDetails)),
   createCustomer: accountBalance => dispatch(createCustomer(accountBalance)),
   generateToken: card => dispatch(generateToken(card)),
-  createCard: (customerID, source) => dispatch(createCard(customerID, source))
+  createCard: (customerID, source) => dispatch(createCard(customerID, source)),
+  clearPaymentSuccessFlag: () => dispatch(clearPaymentSuccessFlag()),
+  clearTokenSuccessFlag: () => dispatch(clearTokenSuccessFlag()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Payment);
