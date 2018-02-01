@@ -1,32 +1,11 @@
-import SyncanoClient from 'syncano-client';
 import actionTypes from '../actions/actionTypes';
+import { createAsyncAction, API } from './util';
 
-const s = new SyncanoClient(process.env.SYNCANO_INSTANCE);
-const { GET_TOKEN_SUCCESSFUL, GET_TOKEN_FAILED, CLEAR_TOKEN_SUCCESS_FLAG } = actionTypes;
-
-/**
- *
- * @param {*} tokenID
- * @returns {object} - action
- */
-const getTokenSuccessful = (tokenID) => {
-  return {
-    type: GET_TOKEN_SUCCESSFUL,
-    payload: { source: tokenID }
-  };
-};
-
-/**
- *
- * @param {*} error
- * @returns {object} - action
- */
-const getTokenFailed = (error) => {
-  return {
-    type: GET_TOKEN_FAILED,
-    error
-  };
-};
+const {
+  GET_TOKEN_SUCCESSFUL,
+  GET_TOKEN_FAILED,
+  CLEAR_TOKEN_SUCCESS_FLAG
+} = actionTypes;
 
 /**
  *
@@ -34,23 +13,19 @@ const getTokenFailed = (error) => {
  * @returns {function} - dispatch
  */
 const generateToken = (card) => {
-  return (dispatch) => {
-    const args = {
-      tokenParams: {
-        card
+  return createAsyncAction(
+    GET_TOKEN_SUCCESSFUL,
+    GET_TOKEN_FAILED,
+    () => API.post(
+      'stripe-payments/tokens/token',
+      {
+        tokenParams: { card }
+      },
+      (response) => {
+        return { source: response.data.id };
       }
-    };
-    return s
-      .post('stripe-payments/tokens/token', args)
-      .then((response) => {
-        if (response.message === 'Token created successfully') {
-          dispatch(getTokenSuccessful(response.data.id));
-        } dispatch(getTokenFailed(response.message));
-      })
-      .catch((error) => {
-        dispatch(getTokenFailed(error));
-      });
-  };
+    )
+  );
 };
 
 const clearTokenSuccessFlag = () => {

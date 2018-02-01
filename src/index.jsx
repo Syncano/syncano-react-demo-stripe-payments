@@ -7,8 +7,6 @@ import App from './components/App';
 import './styles/styles.css';
 
 
-// const history = createBrowserHistory();
-
 render(
   <Provider store={store}>
     <Router>

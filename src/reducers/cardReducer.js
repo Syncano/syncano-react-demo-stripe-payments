@@ -8,11 +8,11 @@ const {
   DELETE_CARD_FAILED } = actionTypes;
 
 /**
-   *
-   * @param {*} state
-   * @param {*} action
-   * @return {state} object
-   */
+ *
+ * @param {*} state
+ * @param {*} action
+ * @return {state} object
+ */
 export default function cardReducer(state = initialState.card, action) {
   switch (action.type) {
     case CREATE_CARD_SUCCESSFUL:
@@ -20,7 +20,7 @@ export default function cardReducer(state = initialState.card, action) {
         ...state,
         data: [
           ...state.data,
-          action.payload.data
+          action.payload
         ],
         successFlag: true
       };
@@ -31,10 +31,9 @@ export default function cardReducer(state = initialState.card, action) {
       };
     case DELETE_CARD_SUCCESSFUL:
       return {
-        ...state,
         data: [...state.data]
           .filter(data => (
-            data.cardID === action.payload.data.cardID
+            data === action.payload.data.cardID
           )),
         successFlag: true
       };

@@ -22,19 +22,20 @@ TableHead.propTypes = {
 
 const TableRow = prop => (
   <tr>
-      <td>{prop.data.cardID}</td>
+      <td className = 'two_chars'>{prop.data.cardID}</td>
       <td>{prop.data.brand}</td>
       <td>{prop.data.last4}</td>
       <td>{prop.data.exp_month}</td>
-      <td>{prop.data.exp_year}</td>
-      <td><span className=''>
+      <td>{prop.data.exp_year}
+          <span className='delete'>
             <i
-                className='fa fa-credit-card'
+                className='fa fa-times-circle'
                 onClick={() => {
                     prop.onDelete(deleteCard(prop.customerID, prop.data.cardID));
                 }}
              />
-          </span></td>
+          </span>
+      </td>
   </tr>
 );
 /**
@@ -49,11 +50,11 @@ class Cards extends React.Component {
        * @return {XML} JSX
        */
   render() {
-    const rows = this.props.card.data.map((person) => {
+    const rows = this.props.card.data.map((cardDetails) => {
       return (
             <TableRow
-                data={person}
-                key={person.cardID}
+                data={cardDetails}
+                key={cardDetails.cardID}
                 onDelete={this.props.dispatch}
                 customerID={this.props.customerID}
             />
@@ -70,7 +71,7 @@ class Cards extends React.Component {
                     <tbody>{rows}</tbody>
                 </table>
                 :
-                <h4>No Cards Stored.</h4>
+                ''
             }
           </div>
         </div>
@@ -82,7 +83,8 @@ class Cards extends React.Component {
 
 Cards.propTypes = {
   card: PropTypes.object,
-  customerID: PropTypes.string
+  customerID: PropTypes.string,
+  dispatch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {

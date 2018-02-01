@@ -130,24 +130,8 @@ class Payment extends React.Component {
         <div className='row'>
           <div className='col-sm-10'>
             <div className='panel panel-default credit-card-box'>
-              <header>
-                <div className='Header-logo'>
-                  <div className='Header-logoWrap'>
-                    <div className='Header-logoBevel' />
-                    <div className='Header-logoBorder ' />
-
-                    <img
-                      className='Header-logoImage'
-                      src='https://pbs.twimg.com/profile_images/692354435738161152/UAkVM9-p.png'
-                      alt='Logo'
-                    />
-                  </div>
-                </div>
-              </header>
-              <br />
-
               <div className='panel-heading display-table'>
-                <div className='row display-tr'>
+                <div className='row space display-tr'>
                   <h3 className='panel-title display-td'>Payment Details</h3>
                   <div className='display-td'>
                     <img
@@ -162,9 +146,9 @@ class Payment extends React.Component {
               <div className='panel-body'>
                 <form id='payment-form' onSubmit={this.onSubmit}>
                   <div className='row'>
-                    <div className='col-sm-12'>Amount: $500</div>
+                    <div className='col-sm-12'> <h4>Amount: $500</h4></div>
                   </div>
-                  <div className='row'>
+                  <div className='row space'>
                     <div className='col-sm-12'>
                       <div className='form-group'>
                         <label htmlFor='cardNumber'>CARD NUMBER</label>
@@ -172,8 +156,7 @@ class Payment extends React.Component {
                           <input
                             type='tel'
                             className='form-control'
-                            placeholder='1234-5678-9876-5432'
-                            autoComplete='cc-number'
+                            placeholder='1234567898765432'
                             name='cardNumber'
                             value={this.state.cardNumber}
                             onChange={this.onChange}
@@ -197,7 +180,6 @@ class Payment extends React.Component {
                               type='tel'
                               className='form-control'
                               placeholder='MM'
-                              autoComplete='cc-month'
                               name='expMonth'
                               value={this.state.expMonth}
                               onChange={this.onChange}
@@ -212,7 +194,6 @@ class Payment extends React.Component {
                           type='tel'
                           className='form-control'
                           placeholder='YYYY'
-                          autoComplete='cc-year'
                           name='expYear'
                           value={this.state.expYear}
                           onChange={this.onChange}
@@ -229,7 +210,6 @@ class Payment extends React.Component {
                           type='tel'
                           className='form-control'
                           placeholder='CVC'
-                          autoComplete='cc-cvc'
                           name='cvCode'
                           value={this.state.cvCode}
                           onChange={this.onChange}

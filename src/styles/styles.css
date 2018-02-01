@@ -1,17 +1,88 @@
-#app {
-  height: 800px;
-  width: 800px;
-  position: absolute;
+/* html, */
+body{
+  height: 100%;
+}
 
-  margin: -400px 0 0 -400px;
-  left: 50%;
-  top: 50%;
+body{
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  color: #6c6f73;
+}
+
+h4, h5 {
+  color: #333;
+}
+.row h4{
+  text-align: right;
+}
+h2{
+  color: #333;
+  text-align: center;
+  margin-top: 35%;
+}
+h6 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
+}
+
+
+
+img{
+  max-width: 100%;
+}
+
+.blockquote{
+  font-size: 1.6rem;
+  color: #333;
+  border: none;
+  padding: 0;
+}
+
+.blockquote-footer{
+  margin: 1rem 0 0;
+}
+tbody td, thead th {
+  /* width: 19.2%; */
+  float: left;
+}
+
+#stage{
+  background: url('../images/background.jpg') center center no-repeat;
+  background-size: cover;
+  color: white;
+  display: flex;
+  align-items: center;
+  position:fixed !important;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+  
+}
+
+#stage-caption{
+  font-size: 1.4rem;
+  font-weight: 400;
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+  color: #1278D2;
+}
+
+#stage-caption h1{
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .Header-logo {
   position: relative;
-  margin-bottom: 6px;
-  height: 35px;
+  height: 40px;
+  /* align-items: center; */
+  margin: 20% 1% -50% 0 !important;
+  z-index: 1000;
 }
 .Header-logoWrap {
   position: absolute;
@@ -54,9 +125,12 @@
 }
 .credit-card-box {
   border-radius: 15px;
-  width: 70%;
+  width: 35%;
+  height: 40% !important;
   box-shadow: 5px 10px #a8a6a6;
-  margin: 20% 0 20% 5%;
+  margin: 14% 0 20% 16% !important;
+  position:fixed !important;
+    position:relative;
 }
 .credit-card-box .panel-title {
   display: inline;
@@ -84,6 +158,8 @@
   display: block;
 }
 .credit-card-box .display-table {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   display: table;
 }
 .credit-card-box .display-tr {
@@ -94,7 +170,13 @@
   vertical-align: middle;
   width: 70%;
 }
-ZZ .credit-card-box .panel-heading img {
+.credit-card-box .space{
+  margin-top: 3%;
+}
+.credit-card-box .panel-heading{
+  height: 20%;
+}
+.credit-card-box .panel-heading img {
   min-width: 180px;
 }
 
@@ -157,7 +239,48 @@ ZZ .credit-card-box .panel-heading img {
     }
   
   .header {
-    background-color: rgb(238, 238, 238);}
+    background-color: rgb(238, 238, 238);
+  }
    .header .div { 
       cursor: pointer;
     }
+
+table {
+        width: 100%;
+    }
+
+thead, tr, td, th { display: block; width: 100%}
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 50px;
+}
+
+tbody {
+  width: 96%;
+    height: 120px;
+    overflow-y: auto;
+}
+
+
+.delete{
+  padding-left: 40%;
+}
+
+tbody td, thead th {
+  width: 19.2%;
+  float: left;
+}
+
+.two_chars{
+font-family: monospace;
+width: 13ch;
+overflow: hidden;
+white-space: nowrap;
+}
