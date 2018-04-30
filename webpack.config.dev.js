@@ -1,18 +1,11 @@
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import path from 'path';
+const path = require('path');
+const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
-// const postcssCfg = path.resolve(__dirname, './postcss.config.js');
-// const GLOBALS = {
-//   'process.env.NODE_ENV': JSON.stringify('development')
-// };
-
-export default {
-  entry: [
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client?reload=true',
-    path.resolve(__dirname, 'src/index')
-  ],
+module.exports = {
+  entry: {
+    app: path.resolve(__dirname, './src/index.jsx')
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/',
@@ -21,6 +14,10 @@ export default {
   devtool: 'inline-source-map',
   target: 'web',
   devServer: {
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    stats: 'errors-only',
     contentBase: path.resolve(__dirname, 'dist')
   },
   plugins: [
@@ -29,9 +26,8 @@ export default {
     new webpack.LoaderOptionsPlugin({
       debug: true
     }),
-    // new webpack.DefinePlugin(GLOBALS),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html')
+    new Dotenv({
+      path: './.env'
     })
   ],
   module: {
@@ -39,12 +35,7 @@ export default {
       {
         test: /\.(js|jsx)?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            query: { presets: ['env', 'react'] }
-          }
-        ],
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
@@ -74,6 +65,6 @@ export default {
     ]
   },
   resolve: {
-    extensions: ['.jsx', '.js', '.scss']
+    extensions: ['.jsx', '.js', '.scss'],
   }
 };

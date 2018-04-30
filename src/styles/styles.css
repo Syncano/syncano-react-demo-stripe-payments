@@ -1,0 +1,286 @@
+/* html, */
+body{
+  height: 100%;
+}
+
+body{
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  color: #6c6f73;
+}
+
+h4, h5 {
+  color: #333;
+}
+.row h4{
+  text-align: right;
+}
+h2{
+  color: #333;
+  text-align: center;
+  margin-top: 35%;
+}
+h6 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
+}
+
+
+
+img{
+  max-width: 100%;
+}
+
+.blockquote{
+  font-size: 1.6rem;
+  color: #333;
+  border: none;
+  padding: 0;
+}
+
+.blockquote-footer{
+  margin: 1rem 0 0;
+}
+tbody td, thead th {
+  /* width: 19.2%; */
+  float: left;
+}
+
+#stage{
+  background: url('../images/background.jpg') center center no-repeat;
+  background-size: cover;
+  color: white;
+  display: flex;
+  align-items: center;
+  position:fixed !important;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+  
+}
+
+#stage-caption{
+  font-size: 1.4rem;
+  font-weight: 400;
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+  color: #1278D2;
+}
+
+#stage-caption h1{
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.Header-logo {
+  position: relative;
+  height: 40px;
+  /* align-items: center; */
+  margin: 20% 1% -50% 0 !important;
+  z-index: 1000;
+}
+.Header-logoWrap {
+  position: absolute;
+  top: -38px;
+  right: 0;
+  left: 0;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+}
+.Header-logoBevel {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  width: 64px;
+  height: 64px;
+  border-radius: 100%;
+  box-shadow: inset 0 1px 0 0 hsla(0, 0%, 100%, 0.1);
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+.Header-logoBorder {
+  border: 3px solid #fff;
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18), 0 2px 2px 0 rgba(0, 0, 0, 0.08);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.Header-logoImage {
+  width: 64px;
+  height: 64px;
+  margin: 3px;
+  border-radius: 100%;
+  background: #fff;
+  background-position: 50% 50%;
+  background-size: cover;
+  display: inline-block;
+}
+.credit-card-box {
+  border-radius: 15px;
+  width: 35%;
+  height: 40% !important;
+  box-shadow: 5px 10px #a8a6a6;
+  margin: 14% 0 20% 16% !important;
+  position:fixed !important;
+    position:relative;
+}
+.credit-card-box .panel-title {
+  display: inline;
+  font-weight: bold;
+}
+
+.credit-card-box .form-control.error {
+  border-color: red;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+}
+.credit-card-box label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+.credit-card-box .payment-errors {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+.credit-card-box label {
+  display: block;
+}
+.credit-card-box .display-table {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: table;
+}
+.credit-card-box .display-tr {
+  display: table-row;
+}
+.credit-card-box .display-td {
+  display: table-cell;
+  vertical-align: middle;
+  width: 70%;
+}
+.credit-card-box .space{
+  margin-top: 3%;
+}
+.credit-card-box .panel-heading{
+  height: 20%;
+}
+.credit-card-box .panel-heading img {
+  min-width: 180px;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.input-group-addon {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  color: #555;
+  text-align: center;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.success-popup {
+  transition: 0.3s ease all;
+  font-family: "Roboto", sans-serif;
+  margin: 20% 0 20% 0%;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.card-sub-header {
+  background: #f5f5f5;
+  padding: 10px 10px;
+  border-bottom: 2px solid;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.submit-button{
+  background-color: #1278D2;
+  color: #fff;
+}
+
+.no-display{
+  display: none;
+}
+
+.display-block{
+  display: block;
+}
+
+.table {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+}
+  .header, .row {
+    display: flex;}
+    
+    .header .div {
+      flex: 1;
+      padding: 0.2rem 0.4em;
+      border: 1px solid rgb(238, 238, 238);
+    }
+  
+  .header {
+    background-color: rgb(238, 238, 238);
+  }
+   .header .div { 
+      cursor: pointer;
+    }
+
+table {
+        width: 100%;
+    }
+
+thead, tr, td, th { display: block; width: 100%}
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 50px;
+}
+
+tbody {
+  width: 96%;
+    height: 120px;
+    overflow-y: auto;
+}
+
+
+.delete{
+  padding-left: 40%;
+}
+
+tbody td, thead th {
+  width: 19.2%;
+  float: left;
+}
+
+.two_chars{
+font-family: monospace;
+width: 13ch;
+overflow: hidden;
+white-space: nowrap;
+}
